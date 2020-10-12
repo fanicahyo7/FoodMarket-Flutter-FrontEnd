@@ -1,127 +1,142 @@
 part of 'pages.dart';
 
-class SignUpPage extends StatefulWidget {
+class AddressPage extends StatefulWidget {
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _AddressPageState createState() => _AddressPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _AddressPageState extends State<AddressPage> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController nameController = TextEditingController();
+    TextEditingController phoneNumController = TextEditingController();
+    TextEditingController houseNumController = TextEditingController();
+    TextEditingController addressController = TextEditingController();
+    TextEditingController cityController = TextEditingController();
     return GeneralPage(
-      title: "Sign Up",
-      subtitle: "Register and eat",
+      title: "Address",
+      subtitle: "Make sure it’s valid",
       onBackButtonPressed: () {
         Get.back();
       },
       child: Column(
         children: [
           Container(
-            width: 110,
-            height: 110,
-            margin: EdgeInsets.only(top: 26),
-            padding: EdgeInsets.all(10),
+            width: double.infinity,
+            margin: EdgeInsets.fromLTRB(defaultMargin, 26, defaultMargin, 6),
+            child: Text(
+              "Phone No.",
+              style: blackFontStyle2,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/photo_border.png"))),
-            child: Container(
-              width: 90,
-              height: 90,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.black)),
+            child: TextField(
+              controller: phoneNumController,
+              decoration: InputDecoration(
+                  hintText: "Type your phone number",
+                  hintStyle: greyFontStyle,
+                  border: InputBorder.none),
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.fromLTRB(defaultMargin, 16, defaultMargin, 6),
+            child: Text(
+              "Address",
+              style: blackFontStyle2,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.black)),
+            child: TextField(
+              controller: addressController,
+              decoration: InputDecoration(
+                  hintText: "Type your address",
+                  hintStyle: greyFontStyle,
+                  border: InputBorder.none),
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.fromLTRB(defaultMargin, 16, defaultMargin, 6),
+            child: Text(
+              "House No.",
+              style: blackFontStyle2,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.black)),
+            child: TextField(
+              controller: houseNumController,
+              decoration: InputDecoration(
+                  hintText: "Type your house number",
+                  hintStyle: greyFontStyle,
+                  border: InputBorder.none),
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.fromLTRB(defaultMargin, 16, defaultMargin, 6),
+            child: Text(
+              "City",
+              style: blackFontStyle2,
+            ),
+          ),
+          Container(
+              width: double.infinity,
+              margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://i.pinimg.com/originals/2c/99/a6/2c99a6aa944687c09ce6922727a16ef2.jpg"),
-                      fit: BoxFit.cover)),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.fromLTRB(defaultMargin, 16, defaultMargin, 6),
-            child: Text(
-              "Full Name",
-              style: blackFontStyle2,
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.black)),
-            child: TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                  hintText: "Type your full name",
-                  hintStyle: greyFontStyle,
-                  border: InputBorder.none),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.fromLTRB(defaultMargin, 16, defaultMargin, 6),
-            child: Text(
-              "Email Address",
-              style: blackFontStyle2,
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.black)),
-            child: TextField(
-              controller: passwordController,
-              decoration: InputDecoration(
-                  hintText: "Type your email address",
-                  hintStyle: greyFontStyle,
-                  border: InputBorder.none),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.fromLTRB(defaultMargin, 16, defaultMargin, 6),
-            child: Text(
-              "Password",
-              style: blackFontStyle2,
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.black)),
-            child: TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                  hintText: "Type your password",
-                  hintStyle: greyFontStyle,
-                  border: InputBorder.none),
-            ),
-          ),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.black)),
+              child: DropdownButton(
+                isExpanded: true,
+                underline: SizedBox(),
+                items: [
+                DropdownMenuItem(
+                    child: Text(
+                  "Batu",
+                  style: blackFontStyle3,
+                )),
+                DropdownMenuItem(
+                    child: Text(
+                  "Malang",
+                  style: blackFontStyle3,
+                )),
+                DropdownMenuItem(
+                    child: Text(
+                  "Pasuruan",
+                  style: blackFontStyle3,
+                )),
+              ], onChanged: (items) {})),
           Container(
               width: double.infinity,
               margin: EdgeInsets.only(top: defaultMargin),
               padding: EdgeInsets.symmetric(horizontal: defaultMargin),
               height: 45,
               child: RaisedButton(
-                  onPressed: () {
-                    Get.to(AddressPage());
-                  },
+                  onPressed: () {},
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
                   color: mainColor,
                   child: Text(
-                    "Continue",
+                    "Sign Up Now",
                     style: GoogleFonts.poppins().copyWith(
                         color: Colors.black, fontWeight: FontWeight.w500),
                   )))
