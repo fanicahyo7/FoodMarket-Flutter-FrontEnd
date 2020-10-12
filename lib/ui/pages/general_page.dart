@@ -1,0 +1,93 @@
+part of 'pages.dart';
+
+class GeneralPage extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final Function onBackButtonPressed;
+  final Widget child;
+  final Color backColor;
+
+  GeneralPage(
+      {this.title = "title",
+      this.subtitle = "subtitle",
+      this.onBackButtonPressed,
+      this.backColor,
+      this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          // warna atas hp
+          Container(
+            color: Colors.white,
+          ),
+          SafeArea(
+              child: Container(
+            color: backColor ?? Colors.white,
+          )),
+          // header judul dan tombol back
+          SafeArea(
+              child: ListView(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    height: 100,
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                    child: Row(
+                      children: [
+                        onBackButtonPressed != null
+                            ? Container(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (onBackButtonPressed() != null) {
+                                      onBackButtonPressed();
+                                    }
+                                  },
+                                ),
+                                width: 24,
+                                height: 24,
+                                margin: EdgeInsets.only(right: 26),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/back_arrow.png"))),
+                              )
+                            : SizedBox(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(title,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 22, fontWeight: FontWeight.w500)),
+                            Text(subtitle,
+                                style: GoogleFonts.poppins(
+                                    color: greyColor,
+                                    fontWeight: FontWeight.w300))
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  // garis abu
+                  Container(
+                    color: "FAFAFC".toColor(),
+                    height: defaultMargin,
+                    width: double.infinity,
+                  ),
+                  // body
+                  child ?? SizedBox(),
+                ],
+              ),
+            ],
+          ))
+        ],
+      ),
+    );
+  }
+}
