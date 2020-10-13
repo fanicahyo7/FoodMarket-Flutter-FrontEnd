@@ -85,7 +85,7 @@ class GeneralPage extends StatelessWidget {
                 ],
               ),
             ],
-          ))
+          )),
         ],
       ),
     );

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:foodmarket_flutter_fe/ui/pages/pages.dart';
 import 'package:get/get.dart';
 
+import 'ui/pages/pages.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -11,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignInPage()
+      home: MainPage()
     );
   }
 }
