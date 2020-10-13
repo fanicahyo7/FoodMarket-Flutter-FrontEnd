@@ -11,7 +11,6 @@ class _AddressPageState extends State<AddressPage> {
     TextEditingController phoneNumController = TextEditingController();
     TextEditingController houseNumController = TextEditingController();
     TextEditingController addressController = TextEditingController();
-    TextEditingController cityController = TextEditingController();
     return GeneralPage(
       title: "Address",
       subtitle: "Make sure it’s valid",
