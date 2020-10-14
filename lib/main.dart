@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodmarket_flutter_fe/models/models.dart';
 import 'package:foodmarket_flutter_fe/ui/pages/pages.dart';
 import 'package:get/get.dart';
 
@@ -12,8 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainPage()
-    );
+        debugShowCheckedModeBanner: false,
+        home: FoodDetailPage(
+          transaction: Transaction(food: mockFoods[0]),
+        ));
   }
 }
