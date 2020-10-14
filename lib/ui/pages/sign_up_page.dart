@@ -34,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                       image: NetworkImage(
-                          "https://i.pinimg.com/originals/2c/99/a6/2c99a6aa944687c09ce6922727a16ef2.jpg"),
+                          "https://www.wowkeren.com/display/images/photo/2019/09/02/00271050.jpg"),
                       fit: BoxFit.cover)),
             ),
           ),
