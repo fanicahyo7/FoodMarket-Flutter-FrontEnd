@@ -72,6 +72,7 @@ class _FoodPageState extends State<FoodPage> {
                 )),
             //food tab
             Container(
+              margin: EdgeInsets.only(top: 6),
               width: double.infinity,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,

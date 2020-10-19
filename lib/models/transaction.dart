@@ -43,7 +43,7 @@ class Transaction extends Equatable {
   List<Object> get props => [id, food, quantity, total, dateTime, status, user];
 }
 
-List<Transaction> transactions = [
+List<Transaction> moskTransactions = [
   Transaction(
       id: 1,
       food: mockFoods[1],

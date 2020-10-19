@@ -59,13 +59,13 @@ class IllustrationPage extends StatelessWidget {
                   width: 200,
                   child: RaisedButton(
                     onPressed: buttonTab2,
-                    color: mainColor,
+                    color: "8D92A3".toColor(),
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)),
                     child: Text(
                       buttonTitle2,
-                      style: blackFontStyle2,
+                      style: blackFontStyle2.copyWith(color: Colors.white),
                     ),
                   ),
                 ),
