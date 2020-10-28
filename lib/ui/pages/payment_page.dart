@@ -1,9 +1,17 @@
 part of 'pages.dart';
 
-class PaymentPage extends StatelessWidget {
+class PaymentPage extends StatefulWidget {
   final Transaction transaction;
 
   PaymentPage({this.transaction});
+
+  @override
+  _PaymentPageState createState() => _PaymentPageState();
+}
+
+class _PaymentPageState extends State<PaymentPage> {
+  bool isLoading = false;
+  
   @override
   build(BuildContext context) {
     return GeneralPage(
@@ -43,7 +51,7 @@ class PaymentPage extends StatelessWidget {
                               image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: NetworkImage(
-                                      transaction.food.picturePath))),
+                                      widget.transaction.food.picturePath))),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +61,7 @@ class PaymentPage extends StatelessWidget {
                                   defaultMargin -
                                   60,
                               child: Text(
-                                transaction.food.name,
+                                widget.transaction.food.name,
                                 style: blackFontStyle2,
                                 maxLines: 2,
                               ),
@@ -67,7 +75,7 @@ class PaymentPage extends StatelessWidget {
                                         symbol: "Rp. ",
                                         decimalDigits: 0,
                                         locale: "id-ID")
-                                    .format(transaction.food.price),
+                                    .format(widget.transaction.food.price),
                                 style: greyFontStyle,
                                 maxLines: 1,
                               ),
@@ -81,7 +89,7 @@ class PaymentPage extends StatelessWidget {
                           defaultMargin -
                           30,
                       child: Text(
-                        transaction.quantity.toString() + " Items",
+                        widget.transaction.quantity.toString() + " Items",
                         style: greyFontStyle,
                         textAlign: TextAlign.right,
                       ),
@@ -103,7 +111,7 @@ class PaymentPage extends StatelessWidget {
                           defaultMargin -
                           5,
                       child: Text(
-                        transaction.food.name,
+                        widget.transaction.food.name,
                         style: greyFontStyle,
                       ),
                     ),
@@ -116,8 +124,7 @@ class PaymentPage extends StatelessWidget {
                                 symbol: "Rp. ",
                                 locale: "id=ID",
                                 decimalDigits: 0)
-                            .format(
-                                transaction.food.price * transaction.quantity),
+                            .format(widget.transaction.total),
                         style: blackFontStyle3.copyWith(
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.right,
@@ -181,9 +188,7 @@ class PaymentPage extends StatelessWidget {
                                 symbol: "Rp. ",
                                 locale: "id=ID",
                                 decimalDigits: 0)
-                            .format(transaction.food.price *
-                                transaction.quantity *
-                                0.1),
+                            .format(widget.transaction.total * 0.1),
                         style: blackFontStyle3.copyWith(
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.right,
@@ -215,11 +220,8 @@ class PaymentPage extends StatelessWidget {
                                 symbol: "Rp. ",
                                 locale: "id=ID",
                                 decimalDigits: 0)
-                            .format((transaction.food.price *
-                                    transaction.quantity) +
-                                (transaction.food.price *
-                                    transaction.quantity *
-                                    0.1) +
+                            .format((widget.transaction.total) +
+                                (widget.transaction.total * 0.1) +
                                 25000),
                         style: blackFontStyle3.copyWith(
                             fontWeight: FontWeight.w500),
@@ -255,7 +257,7 @@ class PaymentPage extends StatelessWidget {
                           defaultMargin -
                           5,
                       child: Text(
-                        transaction.user.name,
+                        widget.transaction.user.name,
                         style: blackFontStyle3.copyWith(
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.right,
@@ -283,7 +285,7 @@ class PaymentPage extends StatelessWidget {
                           defaultMargin -
                           5,
                       child: Text(
-                        transaction.user.phoneNumber,
+                        widget.transaction.user.phoneNumber,
                         style: blackFontStyle3.copyWith(
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.right,
@@ -311,7 +313,7 @@ class PaymentPage extends StatelessWidget {
                           defaultMargin -
                           5,
                       child: Text(
-                        transaction.user.address,
+                        widget.transaction.user.address,
                         style: blackFontStyle3.copyWith(
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.right,
@@ -339,7 +341,7 @@ class PaymentPage extends StatelessWidget {
                           defaultMargin -
                           5,
                       child: Text(
-                        transaction.user.houseNumber,
+                        widget.transaction.user.houseNumber,
                         style: blackFontStyle3.copyWith(
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.right,
@@ -367,7 +369,7 @@ class PaymentPage extends StatelessWidget {
                           defaultMargin -
                           5,
                       child: Text(
-                        transaction.user.city,
+                        widget.transaction.user.city,
                         style: blackFontStyle3.copyWith(
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.right,
@@ -375,24 +377,63 @@ class PaymentPage extends StatelessWidget {
                     )
                   ],
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: defaultMargin, vertical: 26),
-                  height: 45,
-                  width: double.infinity,
-                  child: RaisedButton(
-                    onPressed: () {},
-                    elevation: 0,
-                    color: mainColor,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Text(
-                      "Checkout Now",
-                      style:
-                          blackFontStyle3.copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                )
+                (isLoading)
+                    ? Center(
+                        child: loadingIndicator,
+                      )
+                    : Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: defaultMargin, vertical: 26),
+                        height: 45,
+                        width: double.infinity,
+                        child: RaisedButton(
+                          onPressed: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+
+                            bool result = await context
+                                .bloc<TransactionCubit>()
+                                .submitTransaction(widget.transaction.copyWith(
+                                    dateTime: DateTime.now(),
+                                    total: (widget.transaction.total * 1.1)
+                                            .toInt() +
+                                        25000));
+
+                            if (result == true) {
+                              Get.to(SuccessOrderPage());
+                            } else {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              Get.snackbar("", "",
+                                  backgroundColor: "D9435E".toColor(),
+                                  icon: Icon(
+                                    MdiIcons.closeNetworkOutline,
+                                    color: Colors.white,
+                                  ),
+                                  titleText: Text(
+                                    "Transaction Failed",
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  messageText: Text("Please Try Again Later",
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.white)));
+                            }
+                          },
+                          elevation: 0,
+                          color: mainColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Text(
+                            "Checkout Now",
+                            style: blackFontStyle3.copyWith(
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      )
               ],
             ),
           )

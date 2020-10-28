@@ -192,7 +192,14 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
                                 ],
                               ),
                               RaisedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.to(PaymentPage(
+                                    transaction: widget.transaction.copyWith(
+                                        quantity: quantity,
+                                        total: quantity *
+                                            widget.transaction.food.price),
+                                  ));
+                                },
                                 elevation: 0,
                                 color: mainColor,
                                 shape: RoundedRectangleBorder(

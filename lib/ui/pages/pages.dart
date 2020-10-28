@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:foodmarket_flutter_fe/cubit/cubit.dart';
+import 'package:foodmarket_flutter_fe/cubit/user_cubit.dart';
 import 'package:foodmarket_flutter_fe/models/models.dart';
 import 'package:foodmarket_flutter_fe/shared/shared.dart';
 import 'package:foodmarket_flutter_fe/ui/widgets/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 part 'general_page.dart';
 part 'sign_in_page.dart';
 part 'sign_up_page.dart';

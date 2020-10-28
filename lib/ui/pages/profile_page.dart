@@ -48,26 +48,27 @@ class _ProfilePageState extends State<ProfilePage> {
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
-                                    image: NetworkImage(moskUser.picturePath),
+                                    image: NetworkImage((context
+                                            .bloc<UserCubit>()
+                                            .state as UserLoaded)
+                                        .user
+                                        .picturePath),
                                     fit: BoxFit.cover)),
                           ),
                         ),
-                        Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: defaultMargin),
-                          child: Text(
-                            moskUser.name,
-                            style: blackFontStyle2.copyWith(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                          ),
+                        Text(
+                          (context.bloc<UserCubit>().state as UserLoaded)
+                              .user
+                              .name,
+                          style: blackFontStyle2.copyWith(
+                              fontSize: 18, fontWeight: FontWeight.w500),
                         ),
-                        Container(
-                            margin: EdgeInsets.fromLTRB(
-                                defaultMargin, 6, defaultMargin, 26),
-                            child: Text(
-                              moskUser.email,
-                              style: greyFontStyle.copyWith(fontSize: 14),
-                            ))
+                        Text(
+                          (context.bloc<UserCubit>().state as UserLoaded)
+                              .user
+                              .email,
+                          style: greyFontStyle.copyWith(fontSize: 14),
+                        )
                       ],
                     ),
                   ),
