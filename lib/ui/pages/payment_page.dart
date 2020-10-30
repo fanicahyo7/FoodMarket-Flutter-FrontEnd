@@ -11,7 +11,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   bool isLoading = false;
-  
+
   @override
   build(BuildContext context) {
     return GeneralPage(
@@ -239,8 +239,17 @@ class _PaymentPageState extends State<PaymentPage> {
                 EdgeInsets.symmetric(horizontal: defaultMargin, vertical: 16),
             color: Colors.white,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  'Deliver To',
+                  style: blackFontStyle3,
+                ),
+                SizedBox(
+                  height: 8,
+                ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(

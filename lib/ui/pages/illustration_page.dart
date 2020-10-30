@@ -48,7 +48,7 @@ class IllustrationPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8)),
               child: Text(
                 buttonTitle1,
-                style: blackFontStyle2,
+                style: blackFontStyle2.copyWith(fontSize: 14),maxLines: 2,textAlign: TextAlign.center,
               ),
             ),
           ),
@@ -65,7 +65,7 @@ class IllustrationPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8)),
                     child: Text(
                       buttonTitle2,
-                      style: blackFontStyle2.copyWith(color: Colors.white),
+                      style: blackFontStyle2.copyWith(color: Colors.white,fontSize: 16)
                     ),
                   ),
                 ),
