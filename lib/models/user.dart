@@ -9,6 +9,7 @@ class User extends Equatable {
   final String phoneNumber;
   final String city;
   final String picturePath;
+  static String token;
 
   User(
       {this.id,
@@ -20,18 +21,37 @@ class User extends Equatable {
       this.city,
       this.picturePath});
 
+  User copyWith({
+    int id,
+    String name,
+    String email,
+    String address,
+    String houseNumber,
+    String phoneNumber,
+    String city,
+    String picturePath,
+  }) =>
+      User(
+          id: id ?? this.id,
+          email: email ?? this.email,
+          address: address ?? this.address,
+          houseNumber: houseNumber ?? this.houseNumber,
+          phoneNumber: phoneNumber ?? this.phoneNumber,
+          city: city ?? this.city,
+          picturePath: picturePath ?? this.picturePath);
+
   @override
   List<Object> get props =>
       [id, name, email, address, houseNumber, phoneNumber, city, picturePath];
 }
 
 User moskUser = User(
-  id: 1,
-  name: "Rose",
-  email: "rose@gmail.com",
-  address: "Jl. Mojowangi",
-  houseNumber: "B3",
-  phoneNumber: "082347882944",
-  city: "Batu",
-  picturePath: "https://www.wowkeren.com/display/images/photo/2019/09/02/00271050.jpg"
-);
+    id: 1,
+    name: "Rose",
+    email: "rose@gmail.com",
+    address: "Jl. Mojowangi",
+    houseNumber: "B3",
+    phoneNumber: "082347882944",
+    city: "Batu",
+    picturePath:
+        "https://www.wowkeren.com/display/images/photo/2019/09/02/00271050.jpg");

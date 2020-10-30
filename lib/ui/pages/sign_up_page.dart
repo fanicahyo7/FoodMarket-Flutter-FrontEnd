@@ -6,11 +6,13 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  User user;
+  File pictureFile;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController nameController = TextEditingController();
     return GeneralPage(
       title: "Sign Up",
       subtitle: "Register and eat",
@@ -27,16 +29,24 @@ class _SignUpPageState extends State<SignUpPage> {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/photo_border.png"))),
-            child: Container(
-              width: 90,
-              height: 90,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://www.wowkeren.com/display/images/photo/2019/09/02/00271050.jpg"),
-                      fit: BoxFit.cover)),
-            ),
+            child: (pictureFile != null)
+                ? Container(
+                    width: 90,
+                    height: 90,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: FileImage(pictureFile), fit: BoxFit.cover)),
+                  )
+                : Container(
+                    width: 90,
+                    height: 90,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage("assets/photo.png"),
+                            fit: BoxFit.cover)),
+                  ),
           ),
           Container(
             width: double.infinity,
