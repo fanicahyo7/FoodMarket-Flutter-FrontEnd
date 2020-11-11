@@ -21,32 +21,43 @@ class _SignUpPageState extends State<SignUpPage> {
       },
       child: Column(
         children: [
-          Container(
-            width: 110,
-            height: 110,
-            margin: EdgeInsets.only(top: 26),
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/photo_border.png"))),
-            child: (pictureFile != null)
-                ? Container(
-                    width: 90,
-                    height: 90,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: FileImage(pictureFile), fit: BoxFit.cover)),
-                  )
-                : Container(
-                    width: 90,
-                    height: 90,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: AssetImage("assets/photo.png"),
-                            fit: BoxFit.cover)),
-                  ),
+          GestureDetector(
+            onTap: () async {
+              PickedFile pickedFile =
+                  await ImagePicker().getImage(source: ImageSource.gallery);
+              if (pickedFile != null) {
+                pictureFile = File(pickedFile.path);
+                setState(() {});
+              }
+            },
+            child: Container(
+              width: 110,
+              height: 110,
+              margin: EdgeInsets.only(top: 26),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/photo_border.png"))),
+              child: (pictureFile != null)
+                  ? Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: FileImage(pictureFile),
+                              fit: BoxFit.cover)),
+                    )
+                  : Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: AssetImage("assets/photo.png"),
+                              fit: BoxFit.cover)),
+                    ),
+            ),
           ),
           Container(
             width: double.infinity,
@@ -110,6 +121,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: Colors.black)),
             child: TextField(
+              obscureText: true,
               controller: emailController,
               decoration: InputDecoration(
                   hintText: "Type your password",
@@ -124,7 +136,13 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 45,
               child: RaisedButton(
                   onPressed: () {
-                    Get.to(AddressPage());
+                    Get.to(AddressPage(
+                      User(
+                          name: nameController.text,
+                          email: emailController.text),
+                      passwordController.text,
+                      pictureFile,
+                    ));
                   },
                   elevation: 0,
                   shape: RoundedRectangleBorder(

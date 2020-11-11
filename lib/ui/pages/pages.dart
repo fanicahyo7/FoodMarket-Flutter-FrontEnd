@@ -7,6 +7,7 @@ import 'package:foodmarket_flutter_fe/models/models.dart';
 import 'package:foodmarket_flutter_fe/shared/shared.dart';
 import 'package:foodmarket_flutter_fe/ui/widgets/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:supercharged/supercharged.dart';

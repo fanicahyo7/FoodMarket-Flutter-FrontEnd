@@ -1,16 +1,33 @@
 part of 'pages.dart';
 
 class AddressPage extends StatefulWidget {
+  final User user;
+  final String password;
+  final File pictureFile;
+
+  AddressPage(this.user, this.password, this.pictureFile);
+
   @override
   _AddressPageState createState() => _AddressPageState();
 }
 
 class _AddressPageState extends State<AddressPage> {
+  TextEditingController phoneNumController = TextEditingController();
+  TextEditingController houseNumController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  bool isLoading = false;
+  List<String> cities;
+  String selectedCity;
+
+  @override
+  void initState() {
+    super.initState();
+    cities = ['Bandung', 'Malang', 'Batu', 'Sidoarjo'];
+    selectedCity = cities[0];
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController phoneNumController = TextEditingController();
-    TextEditingController houseNumController = TextEditingController();
-    TextEditingController addressController = TextEditingController();
     return GeneralPage(
       title: "Address",
       subtitle: "Make sure it’s valid",
@@ -104,41 +121,82 @@ class _AddressPageState extends State<AddressPage> {
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: Colors.black)),
               child: DropdownButton(
-                isExpanded: true,
-                underline: SizedBox(),
-                items: [
-                DropdownMenuItem(
-                    child: Text(
-                  "Batu",
-                  style: blackFontStyle3,
-                )),
-                DropdownMenuItem(
-                    child: Text(
-                  "Malang",
-                  style: blackFontStyle3,
-                )),
-                DropdownMenuItem(
-                    child: Text(
-                  "Pasuruan",
-                  style: blackFontStyle3,
-                )),
-              ], onChanged: (items) {})),
+                  value: selectedCity,
+                  isExpanded: true,
+                  underline: SizedBox(),
+                  items: cities
+                      .map((e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(
+                            e,
+                            style: blackFontStyle3,
+                          )))
+                      .toList(),
+                  onChanged: (items) {
+                    setState(() {
+                      selectedCity = items;
+                    });
+                  })),
           Container(
               width: double.infinity,
               margin: EdgeInsets.only(top: defaultMargin),
               padding: EdgeInsets.symmetric(horizontal: defaultMargin),
               height: 45,
-              child: RaisedButton(
-                  onPressed: () {},
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                  color: mainColor,
-                  child: Text(
-                    "Sign Up Now",
-                    style: GoogleFonts.poppins().copyWith(
-                        color: Colors.black, fontWeight: FontWeight.w500),
-                  )))
+              child: (isLoading == true)
+                  ? Center(
+                      child: loadingIndicator,
+                    )
+                  : RaisedButton(
+                      onPressed: () async {
+                        User user = widget.user.copyWith(
+                            phoneNumber: phoneNumController.text,
+                            address: addressController.text,
+                            houseNumber: houseNumController.text,
+                            city: selectedCity);
+
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        await context.bloc<UserCubit>().signUp(
+                            user, widget.password,
+                            pictureFile: widget.pictureFile);
+
+                        UserState state = context.bloc<UserCubit>().state;
+
+                        if (state is UserLoaded) {
+                          context.bloc<FoodCubit>().getFoods();
+                          context.bloc<TransactionCubit>().getTransactions();
+                          Get.to(MainPage());
+                        } else {
+                          Get.snackbar("", "",
+                              backgroundColor: "D9435E".toColor(),
+                              icon: Icon(
+                                MdiIcons.closeCircleOutline,
+                                color: Colors.white,
+                              ),
+                              titleText: Text("Sign Up Failed",
+                                  style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600)),
+                              messageText: Text(
+                                (state as UserLoadingFailed).message,
+                                style: GoogleFonts.poppins(color: Colors.white),
+                              ));
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
+                      },
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      color: mainColor,
+                      child: Text(
+                        "Sign Up Now",
+                        style: GoogleFonts.poppins().copyWith(
+                            color: Colors.black, fontWeight: FontWeight.w500),
+                      )))
         ],
       ),
     );

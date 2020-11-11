@@ -1,12 +1,29 @@
 part of 'services.dart';
 
 class UserServices {
-  static Future<ApiReturnValue<User>> signIn(
-      String email, String password) async {
-    await Future.delayed(Duration(milliseconds: 500));
+  static Future<ApiReturnValue<User>> signIn(String email, String password,
+      {http.Client client}) async {
+    if (client == null) {
+      client = http.Client();
+    }
 
-    return ApiReturnValue(value: moskUser);
-    // return ApiReturnValue(message: "Wrong Email or Password");
+    String url = baseURL + "login";
+
+    var response = await client.post(url,
+        headers: {"Content-Type": "application/json"},
+        body:
+            jsonEncode(<String, String>{'email': email, 'password': password}));
+
+    if (response.statusCode != 200) {
+      return ApiReturnValue(message: 'Please try again');
+    }
+
+    var data = jsonDecode(response.body);
+
+    User.token = data['data']['access_token'];
+    User value = User.fromJson(data['data']['user']);
+
+    return ApiReturnValue(value: value);
   }
 
   static Future<ApiReturnValue<User>> signUp(User user, String password,
@@ -37,7 +54,7 @@ class UserServices {
     var data = jsonDecode(response.body);
 
     User.token = data['data']['access_token'];
-    User value = data['data']['user'];
+    User value = User.fromJson(data['data']['user']);
 
     //upload pp
     if (pictureFile != null) {
@@ -45,7 +62,7 @@ class UserServices {
       if (result.value != null) {
         value = value.copyWith(
             picturePath:
-                "http://127.0.0.1:8000/storage/assets/user/" + result.value);
+                "http://foodmarketbwa.fanicahyo.id/storage/assets/user/" + result.value);
       }
     }
 

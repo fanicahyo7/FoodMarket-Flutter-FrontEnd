@@ -32,7 +32,7 @@ class _SignInPageState extends State<SignInPage> {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: Colors.black)),
             child: TextField(
-              controller: passwordController,
+              controller: emailController,
               decoration: InputDecoration(
                   hintText: "Type your email address",
                   hintStyle: greyFontStyle,
@@ -55,7 +55,8 @@ class _SignInPageState extends State<SignInPage> {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: Colors.black)),
             child: TextField(
-              controller: emailController,
+              controller: passwordController,
+              obscureText: true,
               decoration: InputDecoration(
                   hintText: "Type your password",
                   hintStyle: greyFontStyle,
