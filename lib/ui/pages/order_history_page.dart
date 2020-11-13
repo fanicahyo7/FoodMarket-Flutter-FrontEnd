@@ -60,14 +60,24 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                         .map((e) => Padding(
                               padding: const EdgeInsets.fromLTRB(
                                   defaultMargin, 0, defaultMargin, 16),
-                              child: OrderListItem(
-                                itemWidth: listItemWidth,
-                                transaction: e,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  if (e.status == TransactionStatus.pending) {
+                                    await launch(e.paymentUrl);
+                                  }
+                                },
+                                child: OrderListItem(
+                                  itemWidth: listItemWidth,
+                                  transaction: e,
+                                ),
                               ),
                             ))
                         .toList(),
                   );
-                })
+                }),
+                SizedBox(
+                  height: 60,
+                )
               ],
             ),
           );

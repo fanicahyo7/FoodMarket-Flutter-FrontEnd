@@ -7,6 +7,7 @@ class FoodPage extends StatefulWidget {
 
 class _FoodPageState extends State<FoodPage> {
   int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     double listItemWidth =
@@ -28,7 +29,7 @@ class _FoodPageState extends State<FoodPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "FoodMarket",
+                        "Food Market",
                         style: blackFontStyle1,
                       ),
                       Text(
@@ -43,7 +44,7 @@ class _FoodPageState extends State<FoodPage> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         image: DecorationImage(
-                            image: NetworkImage(
+                            image: NetworkImage(urlstorage +
                                 (context.bloc<UserCubit>().state as UserLoaded)
                                     .user
                                     .picturePath),

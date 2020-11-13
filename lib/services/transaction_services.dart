@@ -7,7 +7,7 @@ class TransactionServices {
       client = http.Client();
     }
 
-    String url = baseURL + "transaction";
+    String url = baseURL + "transaction/?limit=1000";
 
     var response = await client.get(url, headers: {
       "Content-Type": "application/json",
@@ -28,12 +28,35 @@ class TransactionServices {
   }
 
   static Future<ApiReturnValue<Transaction>> submitTransaction(
-      Transaction transaction) async {
-    await Future.delayed(Duration(seconds: 2));
+      Transaction transaction,
+      {http.Client client}) async {
+    if (client == null) {
+      client = http.Client();
+    }
 
-    // return ApiReturnValue(message: "Transaksi Gagal");
-    return ApiReturnValue(
-        value:
-            transaction.copyWith(id: 123, status: TransactionStatus.pending));
+    String url = baseURL + "checkout";
+
+    var response = await client.post(url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${User.token}"
+        },
+        body: jsonEncode(<String, dynamic>{
+          'food_id': transaction.food.id,
+          'user_id': transaction.user.id,
+          'quantity': transaction.quantity,
+          'total': transaction.total,
+          'status': 'PENDING'
+        }));
+
+    if (response.statusCode != 200) {
+      return ApiReturnValue(message: 'Please try again');
+    }
+
+    var data = jsonDecode(response.body);
+
+    Transaction value = Transaction.fromJson(data['data']);
+
+    return ApiReturnValue(value: value);
   }
 }

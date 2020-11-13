@@ -4,7 +4,6 @@ class PaymentPage extends StatefulWidget {
   final Transaction transaction;
 
   PaymentPage({this.transaction});
-
   @override
   _PaymentPageState createState() => _PaymentPageState();
 }
@@ -13,7 +12,7 @@ class _PaymentPageState extends State<PaymentPage> {
   bool isLoading = false;
 
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return GeneralPage(
       title: "Payment",
       subtitle: "You deserve better meal",
@@ -89,7 +88,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           defaultMargin -
                           30,
                       child: Text(
-                        widget.transaction.quantity.toString() + " Items",
+                        '${widget.transaction.quantity} Items',
                         style: greyFontStyle,
                         textAlign: TextAlign.right,
                       ),
@@ -186,7 +185,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       child: Text(
                         NumberFormat.currency(
                                 symbol: "Rp. ",
-                                locale: "id=ID",
+                                locale: "id-ID",
                                 decimalDigits: 0)
                             .format(widget.transaction.total * 0.1),
                         style: blackFontStyle3.copyWith(
@@ -218,11 +217,9 @@ class _PaymentPageState extends State<PaymentPage> {
                       child: Text(
                         NumberFormat.currency(
                                 symbol: "Rp. ",
-                                locale: "id=ID",
+                                locale: "id-ID",
                                 decimalDigits: 0)
-                            .format((widget.transaction.total) +
-                                (widget.transaction.total * 0.1) +
-                                25000),
+                            .format(widget.transaction.total * 1.1 + 25000),
                         style: blackFontStyle3.copyWith(
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.right,
@@ -401,7 +398,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               isLoading = true;
                             });
 
-                            bool result = await context
+                            String paymentURL = await context
                                 .bloc<TransactionCubit>()
                                 .submitTransaction(widget.transaction.copyWith(
                                     dateTime: DateTime.now(),
@@ -409,8 +406,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                             .toInt() +
                                         25000));
 
-                            if (result == true) {
-                              Get.to(SuccessOrderPage());
+                            if (paymentURL != null) {
+                              Get.to(PaymentMethodPage(paymentURL: paymentURL,));
                             } else {
                               setState(() {
                                 isLoading = false;

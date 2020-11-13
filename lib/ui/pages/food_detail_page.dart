@@ -105,6 +105,7 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
                                       setState(() {
                                         if (quantity > 1) {
                                           quantity -= 1;
+                                          print(quantity);
                                         }
                                       });
                                     },
